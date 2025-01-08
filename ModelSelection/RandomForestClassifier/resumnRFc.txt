@@ -1,0 +1,61 @@
+------------  K-fold Cross Validation RandomForestClassifier ------------
+
+random_state: 12
+
+X_train: (533, 1364), X_test: (134, 1364), y_train: (533,), y_test: (134,)
+
+hyper parameters: {'n_estimators': 800, 'max_depth': 21, 'criterion': 'entropy', 'max_features': 'sqrt'}
+
+fold 1 Acc 0.9074074074074074
+fold 2 Acc 0.8703703703703703
+fold 3 Acc 0.9444444444444444
+fold 4 Acc 0.8679245283018868
+fold 5 Acc 0.7924528301886793
+fold 6 Acc 0.9056603773584906
+fold 7 Acc 0.9245283018867925
+fold 8 Acc 0.8490566037735849
+fold 9 Acc 0.8490566037735849
+fold 10 Acc 0.9245283018867925
+
+CV accuracy: 0.884 +/- 0.044
+
+clf test accuracy: 0.9029850746268657
+
+confusion matrix:
+[[80  3]
+ [10 41]]
+
+TP FN
+FP TN
+
+
+----------------------------
+
+random_state: 12
+
+X_train: (533, 1364), X_test: (134, 1364), y_train: (533,), y_test: (134,)
+
+hyper parameters: {'n_estimators': 800, 'max_depth': 11, 'criterion': 'entropy', 'max_features': 'sqrt'}
+
+fold 1 Acc 0.8703703703703703
+fold 2 Acc 0.8518518518518519
+fold 3 Acc 0.9259259259259259
+fold 4 Acc 0.8679245283018868
+fold 5 Acc 0.8113207547169812
+fold 6 Acc 0.8867924528301887
+fold 7 Acc 0.9433962264150944
+fold 8 Acc 0.8490566037735849
+fold 9 Acc 0.8490566037735849
+fold 10 Acc 0.9245283018867925
+
+CV accuracy: 0.878 +/- 0.040
+
+clf test accuracy: 0.9029850746268657
+
+confusion matrix:
+[[80  3]
+ [10 41]]
+
+TP FN
+FP TN
+

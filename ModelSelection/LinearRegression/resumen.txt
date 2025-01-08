@@ -1,0 +1,22 @@
+------------  K-fold Cross Validation LinearRegression  ------------
+
+random_state: 12
+
+X_train: (533, 1364), X_test: (134, 1364), y_train: (533,), y_test: (134,)
+
+hyper parameters: {}
+
+fold 1 mean_absolute_error: 1.297
+fold 2 mean_absolute_error: 1.261
+fold 3 mean_absolute_error: 1.166
+fold 4 mean_absolute_error: 1.427
+fold 5 mean_absolute_error: 1.004
+fold 6 mean_absolute_error: 1.513
+fold 7 mean_absolute_error: 1.274
+fold 8 mean_absolute_error: 1.117
+fold 9 mean_absolute_error: 1.202
+fold 10 mean_absolute_error: 1.062
+
+CV mean_absolute_error: 1.232 +/- 0.149
+
+test mean_absolute_error: 1.17

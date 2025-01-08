@@ -1,0 +1,22 @@
+------------  K-fold Cross Validation RandomForestRegressor ------------
+
+random_state: 12
+
+X_train: (533, 1364), X_test: (134, 1364), y_train: (533,), y_test: (134,)
+
+hyper parameters: {'n_estimators': 800, 'max_depth': 11, 'criterion': 'absolute_error', 'max_features': 'sqrt'}
+
+fold 1 mean_absolute_error 0.21648148148148147
+fold 2 mean_absolute_error 0.26071759259259264
+fold 3 mean_absolute_error 0.2001388888888889
+fold 4 mean_absolute_error 0.2585259433962264
+fold 5 mean_absolute_error 0.23209905660377364
+fold 6 mean_absolute_error 0.2030424528301887
+fold 7 mean_absolute_error 0.19767688679245282
+fold 8 mean_absolute_error 0.2825471698113207
+fold 9 mean_absolute_error 0.2757311320754717
+fold 10 mean_absolute_error 0.1526061320754717
+
+CV mean_absolute_error: 0.228 +/- 0.039
+
+test mean_absolute_error: 0.20318097014925374

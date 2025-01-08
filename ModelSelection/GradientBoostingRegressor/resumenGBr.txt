@@ -1,0 +1,22 @@
+------------  K-fold Cross Validation GradientBoostingRegressor ------------
+
+random_state: 12
+
+X_train: (533, 1364), X_test: (134, 1364), y_train: (533,), y_test: (134,)
+
+hyper parameters: {'loss': 'absolute_error', 'n_estimators': 900, 'max_depth': 11, 'criterion': 'squared_error', 'max_features': 'sqrt'}
+
+fold 1 mean_absolute_error 0.17995332216239823
+fold 2 mean_absolute_error 0.20554795435987128
+fold 3 mean_absolute_error 0.16842297883505458
+fold 4 mean_absolute_error 0.23353054120264533
+fold 5 mean_absolute_error 0.22389843278289187
+fold 6 mean_absolute_error 0.18384203370992866
+fold 7 mean_absolute_error 0.17160893349651987
+fold 8 mean_absolute_error 0.23147740736609876
+fold 9 mean_absolute_error 0.20504773884577027
+fold 10 mean_absolute_error 0.12672688216501793
+
+CV mean_absolute_error: 0.193 +/- 0.032
+
+test mean_absolute_error: 0.17943980017029065
