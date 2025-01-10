@@ -383,3 +383,15 @@ class modelPerformance:
         plt.legend()
         plt.show()
 
+def featureImportancia(importances, indices):
+    x = [float(i) for i in indices]
+    # dark_background    seaborn-whitegrid
+    plt.style.use('dark_background')
+    fig = plt.figure(figsize=(10, 6))
+    ax = plt.axes()
+
+    ax.plot(x, importances, color="#E73F9E",marker='o', markersize=3, linestyle='None',label=r"Pesos/%Frecuencias")
+
+    ax.grid(color='gray', linestyle='--', linewidth=0.5, alpha=0.7)
+    ax.legend()
+    plt.show()
