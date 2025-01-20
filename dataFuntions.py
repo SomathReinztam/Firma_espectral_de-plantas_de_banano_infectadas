@@ -71,6 +71,46 @@ def resumen_Clases_dpi(df):
             print('{0}% en dpi: {1}'.format(p, j))
 
 
+def explainedVarianceLongitudesOnda(df):
+    X_ = df.iloc[:, 4:].values.T
+    cov_M = np.cov(X_)
+    eigen_vals, eigen_vecs = np.linalg.eig(cov_M)
+    eigen_vals = eigen_vals.real
+    tot = sum(eigen_vals).real
+    # la parte imaginaria de tot y eigen_vals es cero pero igual se las quito
+    A = sorted(eigen_vals, reverse=True) 
+    var_exp = [(i/tot) for i in A]
+    var_exp = var_exp[:10]
+    cum_var_exp = np.cumsum(var_exp)
+    cum_var_exp = cum_var_exp[:10]
+    x = [i+1 for i in range(len(var_exp))]
+
+    print('Numero de componentes:', len(eigen_vals))
+    print()
+    print('Primeras 5 componentes de Explained variance ratio')
+    print()
+    s = 0
+    for k in range(5):
+        print(f'variance ratio {k+1}: {var_exp[k]}')
+        s += var_exp[k]
+
+    print(f'Sum explained variance ratio: {s}')
+
+
+    plt.style.use('seaborn-whitegrid')
+    fig = plt.figure(figsize=(10, 6))
+    ax = plt.axes()
+
+    ax.plot(x, var_exp, color='#DE0079', marker='o', markersize=5, label='Explained variance ratio')
+    ax.step(x, cum_var_exp, where='post', color='#00C19B', marker='o', markersize=4, label='Cumulative explained variance')
+    ax.set_xlabel('Principal component index', fontsize=12)
+    ax.set_ylabel('Explained variance ratio', fontsize=12)
+
+    plt.legend()
+    plt.show()
+
+
+
 def plot_datos_PCA_2d(df_):
     pca = PCA(n_components=2)
     X_ = df_.iloc[:, 4:].values
