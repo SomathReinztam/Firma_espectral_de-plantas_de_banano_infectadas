@@ -423,6 +423,40 @@ class modelPerformance:
         plt.legend()
         plt.show()
 
+
+def plotRegModel(y_predict, y_df):
+    df = y_df.copy()
+    df['dpi predict'] = y_predict
+
+    plt.style.use('seaborn-whitegrid')
+    fig = plt.figure(figsize=(10, 6))
+    ax = plt.axes()
+
+    filtro1 = (df['Tratamiento'] == 0)
+    df1 = df[filtro1]
+    x = df1.index.values
+    y_ = df1['dpi predict'].values
+    y = df1['dpi'].values
+
+    ax.plot(x, y, label='data Con', marker='x', linestyle='None', color="#028FA3")
+    ax.plot(x, y_, label='predict Con', marker='x', linestyle='None', color="#FF8100")
+
+    filtro1 = (df['Tratamiento'] != 0)
+    df1 = df[filtro1]
+    x = df1.index.values
+    y_ = df1['dpi predict'].values
+    y = df1['dpi'].values
+
+    ax.plot(x, y, label='data', marker='.', linestyle='None', color="#028FA3")
+    ax.plot(x, y_, label='predict', marker='.', linestyle='None', color="#FF8100")
+
+    ax.set(xlabel='Sample index', ylabel='dpi: dias', title='dpi en test')
+
+    plt.legend()
+    plt.show()
+
+
+
 def featureImportancia(importances, indices):
     x = [float(i) for i in indices]
     # dark_background    seaborn-whitegrid
