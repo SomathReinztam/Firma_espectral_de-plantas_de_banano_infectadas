@@ -8,6 +8,9 @@ from sklearn.decomposition import PCA
 import numpy as np
 from sklearn.model_selection import KFold, learning_curve
 from sklearn.metrics import confusion_matrix, mean_absolute_error
+from sklearn.discriminant_analysis import LinearDiscriminantAnalysis
+from sklearn.manifold import TSNE
+
 
 
 def clasesDiferentes(df):
@@ -96,6 +99,85 @@ def plot_describe(df_describe):
 
 
 
+
+
+
+def ver_planta_idx(df, idx):
+    longitud_onda = [i for i in range(350, 2500+1)]
+    y = df.iloc[idx, 3:]
+    dpi = df.iloc[idx, 0]
+    tratamiento = df.iloc[idx, 2]
+    color = '#DD007D'
+
+    plt.style.use('ggplot')
+    fig = plt.figure(figsize=(8,6))
+    ax = plt.axes()
+
+    ax.plot(
+        longitud_onda,
+        y,
+        color=color,
+        linewidth=1.5,
+        label=f"dpi:{dpi} {tratamiento}"
+    )
+
+    plt.legend()
+    plt.show()
+
+
+def ver_planta_dpi(df, Tratamiento, idxs):
+    longitud_onda = [i for i in range(350, 2500+1)]
+    dpis = [0, 4, 7, 12, 15]
+    colors = ['#00D700', '#BBE200', '#FF8E00', '#EA1B00', '#18180D']
+    plt.style.use('ggplot')
+    fig = plt.figure(figsize=(8,6))
+    ax = plt.axes()
+
+    for i in range(len(dpis)):
+        idx = idxs[i]
+        dpi = dpis[i]
+        y = df.iloc[idx, 3:]
+        ax.plot(
+            longitud_onda,
+            y,
+            color = colors[i],
+            linewidth=1.5,
+            label=f"dpi:{dpi} {Tratamiento}"
+        )
+
+    plt.legend()
+    plt.show()
+
+
+def ver_mean_std(df, filtro):
+    df_filtro = df[filtro]
+    n = df_filtro.shape[0]
+    lgtd_onda = [i for i in range(350, 2500+1)]
+
+    # ggplot   seaborn-whitegrid
+    plt.style.use('seaborn-v0_8-whitegrid')
+    fig, (ax0, ax1) = plt.subplots(nrows=2,  figsize=(12, 6))
+
+    for i in range(n):
+        y = df_filtro.iloc[i, 3:]
+        ax0.plot(lgtd_onda, y, color='#99B098')
+    ax0.plot(lgtd_onda, y, color='#99B098', label='sample')
+    y = df_filtro.iloc[:, 3:].mean(axis=0).values
+    ax0.plot(lgtd_onda, y, color='#CF0079', linewidth=2.5, label='mean')
+    ax0.legend(loc='upper left', bbox_to_anchor=(1, 1))
+
+    y = df_filtro.iloc[:, 3:].std(axis=0).values
+    ax1.plot(lgtd_onda, y, color='#32AFA2', linewidth=2.5, label='std')
+    ax1.legend(loc='upper left', bbox_to_anchor=(1, 1))
+
+    plt.show()
+
+
+
+
+
+
+
 def explainedVarianceLongitudesOnda(df):
     X_ = df.iloc[:, 3:].values.T
     cov_M = np.cov(X_)
@@ -145,7 +227,7 @@ def plot_datos_PCA2d(df):
     df2 = pd.DataFrame(X, columns=['eje_x', 'eje_y'])
     ddf = pd.concat([df1, df2], axis=1)
 
-    plt.style.use('seaborn-whitegrid')
+    plt.style.use('seaborn-v0_8-whitegrid')
     fig = plt.figure(figsize=(10,6))
     ax = plt.axes()
 
@@ -161,6 +243,56 @@ def plot_datos_PCA2d(df):
     
     plt.legend(loc='upper left', bbox_to_anchor=(1, 1))
     plt.show()
+
+def plot_datos_LDA2d(df):
+    lda = LinearDiscriminantAnalysis(n_components=2)
+    X = df.iloc[:, 3:].values
+    y = df['Sana'].values
+    X = lda.fit(X, y).transform(X)
+    df_transform = pd.DataFrame(X, columns=['eje_x', 'eje_y'])
+    df_transform['Sana'] = y
+    plt.style.use('ggplot')
+    fig = plt.figure(figsize=(10,6))
+    ax = plt.axes()
+
+    Sana = [0, 1, -1]
+    Colores = ['#FF7400', '#3EE600', '#0B29C9']
+    Label = ['Fusarium', 'Sana', 'HyS']
+    for i in range(len(Sana)):
+        filtro = (df_transform['Sana'] == Sana[i])
+        df_filtro = df_transform[filtro]
+        x = df_filtro['eje_x'].values
+        y = df_filtro['eje_y'].values
+        ax.scatter(x, y, color=Colores[i], marker='o', label=Label[i])
+    
+    plt.legend(loc='upper left', bbox_to_anchor=(1, 1))
+    plt.show()
+
+
+def plot_datos_tSNE(df):
+    X = df.iloc[:, 3:].values
+    y = df['Sana'].values
+    params = {'n_components':2, 'perplexity':30, 'learning_rate':200, 'n_iter':1500, 'init':'pca', 'random_state':42 }
+    X = TSNE(**params).fit_transform(X)
+    df_transform = pd.DataFrame(X, columns=['eje_x', 'eje_y'])
+    df_transform['Sana'] = y
+    plt.style.use('ggplot')
+    fig = plt.figure(figsize=(10,6))
+    ax = plt.axes()
+
+    Sana = [0, 1, -1]
+    Colores = ['#FF7400', '#3EE600', '#0B29C9']
+    Label = ['Fusarium', 'Sana', 'HyS']
+    for i in range(len(Sana)):
+        filtro = (df_transform['Sana'] == Sana[i])
+        df_filtro = df_transform[filtro]
+        x = df_filtro['eje_x'].values
+        y = df_filtro['eje_y'].values
+        ax.scatter(x, y, color=Colores[i], marker='o', label=Label[i])
+    
+    plt.legend(loc='upper left', bbox_to_anchor=(1, 1))
+    plt.show()
+
 
 
 def plot_heat_map(df):
